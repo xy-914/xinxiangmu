@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>授权总览 · 辰光 Agent</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="dashboard" data-title="授权总览">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="content" data-gate-scope>
+      <div class="page-head">
+        <div>
+          <h1>授权总览</h1>
+          <p class="page-sub">把「谁被允许做什么」摊开来看。切换右上角身份，矩阵会即时反映该身份的权限边界。</p>
+        </div>
+        <div class="page-actions">
+          <a class="btn btn-outline" href="matrix.html" data-perm="role:read">
+            <span class="i-15" data-icon="matrix"></span>角色权限矩阵
+          </a>
+          <button class="btn btn-primary" data-perm="permission:read" data-toast="已刷新授权数据（原型示意）">
+            <span class="i-15" data-icon="refresh"></span>刷新数据
+          </button>
+        </div>
+      </div>
+
+      <div class="tally">
+        <span class="live-dot"></span>
+        <span>当前身份 <b data-role-name>超级管理员</b></span>
+        <span class="tally-sep"></span>
+        <span><b data-visible-count>0</b> 项操作可用</span>
+        <span class="tally-sep"></span>
+        <span><b data-hidden-count>0</b> 项因权限隐藏</span>
+        <span class="tally-sep"></span>
+        <span>权限判定：角色取并集，超级管理员直接放行</span>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat">
+          <div class="stat-label">权限码</div>
+          <div class="stat-value"><span class="stat-num">69</span><span class="stat-suffix">项 / 15 模块</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">角色</div>
+          <div class="stat-value"><span class="stat-num">3</span><span class="stat-suffix">个 · 1 个内置</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">已授权账号</div>
+          <div class="stat-value"><span class="stat-num">18</span><span class="stat-suffix">/ 128</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">本周授权变更</div>
+          <div class="stat-value"><span class="stat-num">6</span><span class="stat-delta">+6</span></div>
+        </div>
+      </div>
+
+      <div class="split">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">当前身份的权限台账</h2>
+              <p class="panel-note" style="margin:2px 0 0">专项列表示查看/创建/编辑/删除之外的操作，如发布、启停、上传。</p>
+            </div>
+            <span class="badge badge-blue" data-role-name>超级管理员</span>
+          </div>
+          <div class="matrix-wrap">
+            <table class="matrix">
+              <thead>
+                <tr>
+                  <th>模块</th>
+                  <th>查看</th>
+                  <th>创建</th>
+                  <th>编辑</th>
+                  <th>删除</th>
+                  <th>专项</th>
+                </tr>
+              </thead>
+              <tbody data-role-matrix-body></tbody>
+            </table>
+          </div>
+          <div class="matrix-legend">
+            <span class="legend-item"><span class="dot on sup"></span>内置授权（超级管理员）</span>
+            <span class="legend-item"><span class="dot on"></span>角色授予</span>
+            <span class="legend-item"><span class="dot"></span>未授予</span>
+            <span class="legend-item"><span class="dot count">3/7</span>专项已授予 / 总数</span>
+          </div>
+        </section>
+
+        <div class="stack">
+          <section class="panel">
+            <div class="panel-head"><h2 class="panel-title">当前身份</h2></div>
+            <div class="identity-card">
+              <div class="identity-top">
+                <div class="avatar" data-avatar-text>周</div>
+                <div>
+                  <div class="identity-name" data-account-name>周管理</div>
+                  <div class="identity-sub"><span data-role-name>超级管理员</span> · <span data-account-id>admin</span></div>
+                </div>
+              </div>
+              <ul class="identity-list">
+                <li><span>权限码</span><b data-role-perm-count>69 / 69</b></li>
+                <li><span>角色</span><b>admin（内置）</b></li>
+                <li><span>数据范围</span><b>全部资源</b></li>
+                <li><span>校验策略</span><b>绕过 RBAC</b></li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2 class="panel-title">最近授权变更</h2>
+              <span class="panel-note">近 24 小时</span>
+            </div>
+            <div class="panel-body">
+              <ul class="timeline">
+                <li>
+                  <time>今天 09:04</time>
+                  <b>平台运营</b> 新增 <span class="code">knowledge:retrieval</span>
+                  <div class="cell-sub">操作人：周管理</div>
+                </li>
+                <li>
+                  <time>今天 08:31</time>
+                  <b>王产品</b> 被分配角色 <span class="code">auditor</span>
+                  <div class="cell-sub">操作人：周管理</div>
+                </li>
+                <li>
+                  <time>昨天 17:22</time>
+                  <b>只读审计</b> 移除 <span class="code">user:update</span>
+                  <div class="cell-sub">操作人：周管理</div>
+                </li>
+                <li>
+                  <time>昨天 16:10</time>
+                  <b>赵开发</b> 账号被停用，保留角色分配
+                  <div class="cell-sub">操作人：陈运营</div>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head"><h2 class="panel-title">需要关注</h2></div>
+            <div class="panel-body" style="display:grid;gap:10px">
+              <div style="display:flex;gap:8px;align-items:flex-start">
+                <span class="badge badge-amber">待分配</span>
+                <span class="cell-sub" style="flex:1">4 个账号尚未分配任何角色，仅能访问工作台。</span>
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-start">
+                <span class="badge badge-gray">空闲</span>
+                <span class="cell-sub" style="flex:1">角色 <span class="code">auditor</span> 近 30 天无新增分配。</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

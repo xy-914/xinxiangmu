@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>原型说明 · 辰光 Agent RBAC</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="index" data-title="原型说明">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="content" data-gate-scope>
+      <section class="hero">
+        <div>
+          <h1>把权限做成<em>看得见</em>的东西。</h1>
+          <p>这套原型为 PROJECT_SPEC_V2 的 RBAC 授权需求而做。核心不是多画几个页面，而是让「当前身份被允许做什么」在界面上随时可核对：菜单会少、按钮会消失、矩阵会变。</p>
+          <div class="hero-meta">
+            <div><span class="k">8</span><span class="v">静态页面</span></div>
+            <div><span class="k">69</span><span class="v">权限码</span></div>
+            <div><span class="k">3</span><span class="v">演示身份</span></div>
+            <div><span class="k">3</span><span class="v">控制层级</span></div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-head">
+            <span>当前身份的权限摘要</span>
+            <span class="badge badge-blue" data-role-name>超级管理员</span>
+          </div>
+          <div class="hero-card-body">
+            <div class="mini-row head">
+              <span>模块</span><span class="cell">查看</span><span class="cell">创建</span><span class="cell">编辑</span><span class="cell">删除</span><span class="cell">专项</span>
+            </div>
+            <div data-mini-matrix-body></div>
+          </div>
+          <div class="matrix-legend">
+            <span class="legend-item"><span class="dot on sup"></span>内置授权</span>
+            <span class="legend-item"><span class="dot on"></span>角色授予</span>
+            <span class="legend-item"><span class="dot"></span>未授予</span>
+            <span class="legend-item">切换右上角身份可即时查看差异</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-head">
+        <h2>页面清单</h2>
+        <span>静态页面位于 <span class="code">docs/ui/rbac/</span></span>
+      </div>
+
+      <div class="page-list">
+        <a href="dashboard.html">
+          <span class="pname">授权总览</span>
+          <span class="pdesc">权限台账矩阵、当前身份摘要、最近授权变更与待关注项。</span>
+          <span class="pcode"><span class="code">permission:read</span></span>
+          <span class="pgo">打开 →</span>
+        </a>
+        <a href="users.html">
+          <span class="pname">用户管理</span>
+          <span class="pdesc">账号列表与角色分配；添加、删除、分配角色按钮按权限码显隐。</span>
+          <span class="pcode"><span class="code">user:read</span><span class="code">user:assign_role</span></span>
+          <span class="pgo">打开 →</span>
+        </a>
+        <a href="roles.html">
+          <span class="pname">角色管理</span>
+          <span class="pdesc">角色 CRUD 与权限分配抽屉；内置 admin 角色受保护。</span>
+          <span class="pcode"><span class="code">role:read</span><span class="code">role:assign_permission</span></span>
+          <span class="pgo">打开 →</span>
+        </a>
+        <a href="permissions.html">
+          <span class="pname">权限管理</span>
+          <span class="pdesc">69 个权限码按模块分组，可搜索、按范围筛选、创建与删除。</span>
+          <span class="pcode"><span class="code">permission:read</span></span>
+          <span class="pgo">打开 →</span>
+        </a>
+        <a href="matrix.html">
+          <span class="pname">角色权限矩阵</span>
+          <span class="pdesc">三个角色 × 15 模块 × 5 类操作的完整核对表。</span>
+          <span class="pcode"><span class="code">role:read</span></span>
+          <span class="pgo">打开 →</span>
+        </a>
+        <a href="login.html">
+          <span class="pname">登录</span>
+          <span class="pdesc">账号密码 + 图形验证码；进入前说明三种演示身份。</span>
+          <span class="pcode"><span class="code">公开接口</span></span>
+          <span class="pgo">打开 →</span>
+        </a>
+        <a href="denied.html">
+          <span class="pname">无权限页</span>
+          <span class="pdesc">403 状态：说明缺少哪个权限码，并提供身份切换与返回路径。</span>
+          <span class="pcode"><span class="code">settings:update</span></span>
+          <span class="pgo">打开 →</span>
+        </a>
+        <a href="index.html">
+          <span class="pname">原型说明</span>
+          <span class="pdesc">本页：设计方向、页面清单、令牌与产物索引。</span>
+          <span class="pcode"><span class="code">—</span></span>
+          <span class="pgo">当前页</span>
+        </a>
+      </div>
+
+      <div class="section-head">
+        <h2>设计令牌</h2>
+        <span>颜色承担语义，不承担装饰</span>
+      </div>
+
+      <div class="token-grid" style="margin-bottom:18px">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#16233b"></div>
+          <div class="swatch-meta"><b>#16233B</b>墨蓝 · 侧栏与深色面板</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#2f4de0"></div>
+          <div class="swatch-meta"><b>#2F4DE0</b>钴蓝 · 主操作与已授予</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1f7a5c"></div>
+          <div class="swatch-meta"><b>#1F7A5C</b>松绿 · 内置授权与健康状态</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#a9640a"></div>
+          <div class="swatch-meta"><b>#A9640A</b>赭黄 · 待处理与待分配</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#f4f6fa;border-bottom:1px solid #e1e6ef"></div>
+          <div class="swatch-meta"><b>#F4F6FA</b>冷纸 · 内容区底色</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#ffffff;border-bottom:1px solid #e1e6ef"></div>
+          <div class="swatch-meta"><b>#FFFFFF</b>面板 · 表格与抽屉</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+          <div>
+            <div class="cell-sub" style="margin-bottom:6px">界面字体</div>
+            <div style="font-size:20px;font-weight:600">微软雅黑 / PingFang SC</div>
+            <div class="cell-sub">中文正文 14px，行高 1.6；标题字重 600–700</div>
+          </div>
+          <div>
+            <div class="cell-sub" style="margin-bottom:6px">数字与拉丁字</div>
+            <div style="font-family:var(--font-num);font-size:24px;font-weight:600">Bahnschrift 0123456789</div>
+            <div class="cell-sub">用于指标数字与编号，字形偏窄，表格更整齐</div>
+          </div>
+          <div>
+            <div class="cell-sub" style="margin-bottom:6px">权限码</div>
+            <div style="font-family:var(--font-mono);font-size:15px">agent:publish</div>
+            <div class="cell-sub">等宽字体，保持编码可逐字核对</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>产物索引</h2>
+        <span>两套产物：可交互页面 + 页面截图</span>
+      </div>
+
+      <div class="page-list">
+        <div style="display:grid;grid-template-columns:190px minmax(0,1fr) 160px 90px;gap:18px;padding:14px 18px;border-bottom:1px solid var(--line);align-items:center">
+          <span class="pname">静态页面</span>
+          <span class="pdesc"><span class="code">docs/ui/rbac/*.html</span> + <span class="code">assets/</span>，原生 HTML/CSS/JS，无构建步骤。</span>
+          <span class="pcode"><span class="code">8 个</span></span>
+          <span class="pgo">—</span>
+        </div>
+        <div style="display:grid;grid-template-columns:190px minmax(0,1fr) 160px 90px;gap:18px;padding:14px 18px;align-items:center">
+          <span class="pname">页面截图</span>
+          <span class="pdesc"><span class="code">docs/ui/rbac/images/*.png</span>，1440px 宽，Edge headless 渲染；含只读身份对比图。</span>
+          <span class="pcode"><span class="code">9 张</span></span>
+          <span class="pgo">—</span>
+        </div>
+      </div>
+
+      <p class="cell-sub" style="margin-top:18px">说明文档见 <span class="code">docs/design/ui/</span>。原型不连接真实后端，所有操作只给出提示反馈。</p>
+    </main>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

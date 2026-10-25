@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>权限管理 · 辰光 Agent</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="permissions" data-title="权限管理" data-group="系统管理">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="content" data-gate-scope>
+      <div class="page-head">
+        <div>
+          <h1>权限管理</h1>
+          <p class="page-sub">权限码是后端接口与前端按钮共用的契约。格式为「资源:操作」，创建后不可修改编码。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" data-perm="permission:create" data-drawer-open="perm-form-drawer">
+            <span class="i-15" data-icon="plus"></span>创建权限
+          </button>
+        </div>
+      </div>
+
+      <div class="tally">
+        <span class="live-dot"></span>
+        <span>当前身份 <b data-role-name>超级管理员</b></span>
+        <span class="tally-sep"></span>
+        <span><b data-visible-count>0</b> 项操作可用</span>
+        <span class="tally-sep"></span>
+        <span><b data-hidden-count>0</b> 项因权限隐藏</span>
+        <span class="tally-sep"></span>
+        <span>权限码按模块分组，共 69 项</span>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat">
+          <div class="stat-label">权限码总数</div>
+          <div class="stat-value"><span class="stat-num">69</span><span class="stat-suffix">项</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">覆盖模块</div>
+          <div class="stat-value"><span class="stat-num">15</span><span class="stat-suffix">个</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">角色总数</div>
+          <div class="stat-value"><span class="stat-num">3</span><span class="stat-suffix">个</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">本周新增</div>
+          <div class="stat-value"><span class="stat-num">2</span><span class="stat-delta">+2</span></div>
+        </div>
+      </div>
+
+      <section class="panel">
+        <div class="toolbar">
+          <div class="search">
+            <span data-icon="search"></span>
+            <input class="input" type="search" placeholder="搜索权限码或名称，如 agent:publish" data-catalog-search>
+          </div>
+          <div class="chip-group">
+            <button class="chip" data-module-filter-btn="all" aria-pressed="true">全部</button>
+            <button class="chip" data-module-filter-btn="system" aria-pressed="false">系统管理</button>
+            <button class="chip" data-module-filter-btn="business" aria-pressed="false">业务模块</button>
+            <button class="chip" data-module-filter-btn="user" aria-pressed="false">用户</button>
+            <button class="chip" data-module-filter-btn="agent" aria-pressed="false">Agent</button>
+            <button class="chip" data-module-filter-btn="knowledge" aria-pressed="false">知识库</button>
+          </div>
+        </div>
+
+        <div class="panel-body" data-catalog-body data-module-filter="all" style="background:#fbfcfe"></div>
+
+        <div class="pagination">
+          <span>共 69 个权限码，15 个模块</span>
+          <div class="pager"><button disabled>上一页</button><button aria-current="page">1</button><button disabled>下一页</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="drawer" id="perm-form-drawer" role="dialog" aria-modal="true" aria-labelledby="perm-form-title">
+  <div class="drawer-head">
+    <div>
+      <h2 class="drawer-title" id="perm-form-title">创建权限</h2>
+      <p class="drawer-note">编码必须与后端接口声明的权限码一致，否则无法生效。</p>
+    </div>
+    <button class="btn btn-ghost btn-icon" data-drawer-close aria-label="关闭"><span class="i-16" data-icon="x"></span></button>
+  </div>
+  <div class="drawer-body">
+    <div class="field">
+      <label for="perm-code">权限编码</label>
+      <input class="input" id="perm-code" placeholder="如：agent:export">
+      <span class="cell-sub">格式：资源:操作；创建后不可修改</span>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label for="perm-name">权限名称</label>
+      <input class="input" id="perm-name" placeholder="如：导出 Agent 配置">
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label for="perm-desc">描述</label>
+      <input class="input" id="perm-desc" placeholder="说明该权限控制的具体操作（可选）">
+    </div>
+    <div class="auth-hint" style="margin-top:18px">
+      新增权限码后，需要在后端接口与前端按钮上同时声明，才能形成完整的授权闭环。
+    </div>
+  </div>
+  <div class="drawer-foot">
+    <button class="btn btn-outline" data-drawer-close>取消</button>
+    <button class="btn btn-primary" data-drawer-close data-toast="权限已创建，可在角色管理中分配（原型示意）">创建权限</button>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

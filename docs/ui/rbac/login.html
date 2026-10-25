@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录 · 辰光 Agent</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="login">
+<div class="auth">
+  <section class="auth-brand">
+    <div class="brand">
+      <div class="brand-mark"><span style="width:17px;height:17px" data-icon="shield"></span></div>
+      <div class="brand-text">
+        <div class="brand-name">辰光 Agent</div>
+        <div class="brand-sub">Enterprise</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="auth-statement">
+        <h2>权限不是一张表，<br>是一道门。</h2>
+        <p>每一次点击都会先问一句：这个身份，被允许吗？角色给出权限，权限守住边界，边界之外的操作根本不会出现。</p>
+      </div>
+      <div class="auth-quote">
+        本原型包含三种演示身份：超级管理员、平台运营、只读审计。登录后可在右上角随时切换。
+      </div>
+    </div>
+
+    <div class="auth-foot">辰光 Agent 平台 · 企业级 AI Agent 管理 · v2.0 原型</div>
+  </section>
+
+  <section class="auth-panel">
+    <form class="auth-form" onsubmit="event.preventDefault(); toast('登录成功，正在进入工作台（原型示意）'); setTimeout(() => location.href = 'dashboard.html', 700);">
+      <h1>登录</h1>
+      <p>使用平台账号进入控制台</p>
+
+      <div class="field">
+        <label for="username">用户名</label>
+        <input class="input" id="username" name="username" autocomplete="username" value="admin" placeholder="请输入用户名">
+      </div>
+
+      <div class="field">
+        <label for="password">密码</label>
+        <input class="input" id="password" name="password" type="password" autocomplete="current-password" value="admin123" placeholder="请输入密码">
+      </div>
+
+      <div class="field">
+        <label for="captcha">验证码</label>
+        <div class="captcha-row">
+          <input class="input" id="captcha" name="captcha" placeholder="输入右侧字符" autocomplete="off">
+          <div class="captcha-box" title="点击刷新验证码">
+            <span class="captcha-text" data-captcha>7K3P</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary auth-submit" type="submit">进入控制台</button>
+
+      <div class="auth-hint">
+        <b>演示账号</b>：admin / admin123。验证码仅作视觉示意，点击可刷新；原型不校验输入。
+      </div>
+
+      <p class="cell-sub" style="margin-top:18px;text-align:center">
+        <a href="index.html" style="color:var(--cobalt)">查看原型说明与页面清单</a>
+      </p>
+    </form>
+  </section>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

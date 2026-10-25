@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>角色管理 · 辰光 Agent</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="roles" data-title="角色管理" data-group="系统管理">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="content" data-gate-scope>
+      <div class="page-head">
+        <div>
+          <h1>角色管理</h1>
+          <p class="page-sub">角色是权限的集合。用户通过角色获得权限，多个角色的权限取并集。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" data-perm="role:create" data-drawer-open="role-form-drawer">
+            <span class="i-15" data-icon="plus"></span>创建角色
+          </button>
+        </div>
+      </div>
+
+      <div class="tally">
+        <span class="live-dot"></span>
+        <span>当前身份 <b data-role-name>超级管理员</b></span>
+        <span class="tally-sep"></span>
+        <span><b data-visible-count>0</b> 项操作可用</span>
+        <span class="tally-sep"></span>
+        <span><b data-hidden-count>0</b> 项因权限隐藏</span>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat">
+          <div class="stat-label">角色总数</div>
+          <div class="stat-value"><span class="stat-num">3</span><span class="stat-suffix">个</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">已授权用户</div>
+          <div class="stat-value"><span class="stat-num">18</span><span class="stat-suffix">人</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">内置角色</div>
+          <div class="stat-value"><span class="stat-num">1</span><span class="stat-suffix">个 · 受保护</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">本周权限变更</div>
+          <div class="stat-value"><span class="stat-num">6</span><span class="stat-delta">+6</span></div>
+        </div>
+      </div>
+
+      <div class="split">
+        <section class="panel">
+          <div class="toolbar">
+            <div class="search">
+              <span data-icon="search"></span>
+              <input class="input" type="search" placeholder="搜索角色名称或编码" data-search>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th style="width:150px">角色编码</th>
+                  <th>名称</th>
+                  <th style="width:88px">类型</th>
+                  <th style="width:96px">权限数</th>
+                  <th style="width:88px">用户数</th>
+                  <th style="width:150px">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-filter-row>
+                  <td><span class="code">admin</span></td>
+                  <td>
+                    <div class="cell-name">超级管理员</div>
+                    <div class="cell-sub">拥有全部权限，不可删除</div>
+                  </td>
+                  <td><span class="badge badge-blue">内置</span></td>
+                  <td class="num">69</td>
+                  <td class="num">1</td>
+                  <td>
+                    <div class="row-actions">
+                      <button class="btn btn-ghost btn-icon" title="内置角色不可编辑" disabled><span class="i-14" data-icon="lock"></span></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr data-filter-row>
+                  <td><span class="code">ops</span></td>
+                  <td>
+                    <div class="cell-name">平台运营</div>
+                    <div class="cell-sub">业务可编辑，系统只读</div>
+                  </td>
+                  <td><span class="badge badge-gray">自定义</span></td>
+                  <td class="num">33</td>
+                  <td class="num">12</td>
+                  <td>
+                    <div class="row-actions">
+                      <button class="btn btn-ghost btn-icon" title="编辑角色" data-perm="role:update" data-drawer-open="role-form-drawer"><span class="i-14" data-icon="edit"></span></button>
+                      <button class="btn btn-ghost btn-icon" title="分配权限" data-perm="role:assign_permission" data-drawer-open="perm-drawer"><span class="i-14" data-icon="key"></span></button>
+                      <button class="btn btn-ghost btn-icon" title="删除角色" data-perm="role:delete" data-toast="删除角色「平台运营」前需先解除 12 名用户的分配（原型示意）"><span class="i-14" data-icon="trash" style="color:var(--danger)"></span></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr data-filter-row>
+                  <td><span class="code">auditor</span></td>
+                  <td>
+                    <div class="cell-name">只读审计</div>
+                    <div class="cell-sub">仅查看，不可变更</div>
+                  </td>
+                  <td><span class="badge badge-gray">自定义</span></td>
+                  <td class="num">15</td>
+                  <td class="num">5</td>
+                  <td>
+                    <div class="row-actions">
+                      <button class="btn btn-ghost btn-icon" title="编辑角色" data-perm="role:update" data-drawer-open="role-form-drawer"><span class="i-14" data-icon="edit"></span></button>
+                      <button class="btn btn-ghost btn-icon" title="分配权限" data-perm="role:assign_permission" data-drawer-open="perm-drawer"><span class="i-14" data-icon="key"></span></button>
+                      <button class="btn btn-ghost btn-icon" title="删除角色" data-perm="role:delete" data-toast="删除角色「只读审计」前需先解除 5 名用户的分配（原型示意）"><span class="i-14" data-icon="trash" style="color:var(--danger)"></span></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span>共 3 个角色</span>
+            <div class="pager"><button disabled>上一页</button><button aria-current="page">1</button><button disabled>下一页</button></div>
+          </div>
+        </section>
+
+        <div class="stack">
+          <section class="panel">
+            <div class="panel-head">
+              <h2 class="panel-title">权限如何生效</h2>
+            </div>
+            <div class="panel-body">
+              <ol style="margin:0;padding-left:18px;font-size:12.5px;color:var(--slate);line-height:1.9">
+                <li>接口声明所需权限码，如 <span class="code">user:create</span>。</li>
+                <li>用户所属角色的权限取并集。</li>
+                <li>并集包含该权限码才放行，否则返回 <span class="code">403</span>。</li>
+                <li><b style="color:var(--ink)">超级管理员</b>跳过以上判断。</li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2 class="panel-title">角色约束</h2>
+            </div>
+            <div class="panel-body">
+              <ul style="margin:0;padding-left:18px;font-size:12.5px;color:var(--slate);line-height:1.9">
+                <li>内置 <span class="code">admin</span> 角色不可删除、不可清空权限。</li>
+                <li>删除角色前需先解除其与用户的关联。</li>
+                <li>删除权限前需确认引用该权限的角色范围。</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- 创建 / 编辑角色 -->
+<div class="drawer" id="role-form-drawer" role="dialog" aria-modal="true" aria-labelledby="role-form-title">
+  <div class="drawer-head">
+    <div>
+      <h2 class="drawer-title" id="role-form-title">创建角色</h2>
+      <p class="drawer-note">编码创建后不可修改，建议与业务语义一致，如 content_reviewer。</p>
+    </div>
+    <button class="btn btn-ghost btn-icon" data-drawer-close aria-label="关闭"><span class="i-16" data-icon="x"></span></button>
+  </div>
+  <div class="drawer-body">
+    <div class="field">
+      <label for="role-code">角色编码</label>
+      <input class="input" id="role-code" placeholder="如：content_reviewer">
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label for="role-name">角色名称</label>
+      <input class="input" id="role-name" placeholder="如：内容审核员">
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label for="role-desc">描述</label>
+      <input class="input" id="role-desc" placeholder="说明该角色的职责范围（可选）">
+    </div>
+  </div>
+  <div class="drawer-foot">
+    <button class="btn btn-outline" data-drawer-close>取消</button>
+    <button class="btn btn-primary" data-drawer-close data-toast="角色已创建，可继续为其分配权限（原型示意）">创建角色</button>
+  </div>
+</div>
+
+<!-- 分配权限 -->
+<div class="drawer" id="perm-drawer" role="dialog" aria-modal="true" aria-labelledby="perm-drawer-title">
+  <div class="drawer-head">
+    <div>
+      <h2 class="drawer-title" id="perm-drawer-title">分配权限 — 平台运营</h2>
+      <p class="drawer-note">勾选后立即写入角色权限集合。已授予 <b>33</b> / 69 项。</p>
+    </div>
+    <button class="btn btn-ghost btn-icon" data-drawer-close aria-label="关闭"><span class="i-16" data-icon="x"></span></button>
+  </div>
+  <div class="drawer-body">
+    <div class="search" style="max-width:none;margin-bottom:14px">
+      <span data-icon="search"></span>
+      <input class="input" type="search" placeholder="筛选权限码或名称">
+    </div>
+
+    <div class="perm-group" data-perm-group>
+      <div class="perm-group-head"><span>Agent</span><span class="count">7 / 8</span></div>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">查看 Agent</span><span class="code">agent:read</span></label>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">创建 Agent</span><span class="code">agent:create</span></label>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">编辑 Agent</span><span class="code">agent:update</span></label>
+      <label class="perm-row"><input type="checkbox"><span class="name">删除 Agent</span><span class="code">agent:delete</span></label>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">发布版本</span><span class="code">agent:publish</span></label>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">回滚版本</span><span class="code">agent:rollback</span></label>
+    </div>
+
+    <div class="perm-group" data-perm-group>
+      <div class="perm-group-head"><span>知识库</span><span class="count">9 / 11</span></div>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">查看知识库</span><span class="code">knowledge:read</span></label>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">创建知识库</span><span class="code">knowledge:create</span></label>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">修改配置</span><span class="code">knowledge:config</span></label>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">上传文档</span><span class="code">knowledge:upload</span></label>
+      <label class="perm-row"><input type="checkbox"><span class="name">删除知识库</span><span class="code">knowledge:delete</span></label>
+      <label class="perm-row"><input type="checkbox"><span class="name">删除分段</span><span class="code">knowledge:seg_delete</span></label>
+    </div>
+
+    <div class="perm-group" data-perm-group>
+      <div class="perm-group-head"><span>系统管理</span><span class="count">1 / 25</span></div>
+      <label class="perm-row"><input type="checkbox" checked><span class="name">查看用户</span><span class="code">user:read</span></label>
+      <label class="perm-row"><input type="checkbox"><span class="name">创建用户</span><span class="code">user:create</span></label>
+      <label class="perm-row"><input type="checkbox"><span class="name">分配角色</span><span class="code">user:assign_role</span></label>
+      <label class="perm-row"><input type="checkbox"><span class="name">查看权限</span><span class="code">permission:read</span></label>
+      <label class="perm-row"><input type="checkbox"><span class="name">修改系统配置</span><span class="code">settings:update</span></label>
+    </div>
+
+    <p class="cell-sub" style="margin:0">完整清单共 69 项，抽屉内仅展示代表性分组。</p>
+  </div>
+  <div class="drawer-foot">
+    <button class="btn btn-outline" data-drawer-close>取消</button>
+    <button class="btn btn-primary" data-drawer-close data-toast="角色权限已更新，相关用户下次请求即生效（原型示意）">保存权限</button>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

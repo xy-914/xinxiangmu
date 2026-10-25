@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>角色权限矩阵 · 辰光 Agent</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="matrix" data-title="角色权限矩阵" data-group="系统管理">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="content" data-gate-scope>
+      <div class="page-head">
+        <div>
+          <h1>角色权限矩阵</h1>
+          <p class="page-sub">一张表核对三个角色的权限边界。绿色表示超级管理员的内置授权，蓝色表示角色明确授予。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-outline" data-perm="role:read" data-toast="导出矩阵为 CSV（原型示意）">
+            <span class="i-15" data-icon="upload"></span>导出
+          </button>
+          <a class="btn btn-primary" href="roles.html" data-perm="role:read">
+            <span class="i-15" data-icon="arrow"></span>管理角色
+          </a>
+        </div>
+      </div>
+
+      <div class="role-cards">
+        <div class="role-card">
+          <div class="role-card-top">
+            <span class="role-card-name">超级管理员</span>
+            <span class="badge badge-blue">内置</span>
+          </div>
+          <div class="role-card-code">admin</div>
+          <div class="role-card-count">69 <span>/ 69 项权限</span></div>
+          <div class="role-card-desc">绕过权限校验，前端可见全部入口</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-top">
+            <span class="role-card-name">平台运营</span>
+            <span class="badge badge-gray">自定义</span>
+          </div>
+          <div class="role-card-code">ops</div>
+          <div class="role-card-count">33 <span>/ 69 项权限</span></div>
+          <div class="role-card-desc">业务模块可编辑，系统管理只读</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-top">
+            <span class="role-card-name">只读审计</span>
+            <span class="badge badge-gray">自定义</span>
+          </div>
+          <div class="role-card-code">auditor</div>
+          <div class="role-card-count">15 <span>/ 69 项权限</span></div>
+          <div class="role-card-desc">仅查看，不含任何写操作</div>
+        </div>
+      </div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">权限矩阵</h2>
+            <p class="panel-note" style="margin:2px 0 0">「专项」列汇总发布、启停、上传、配置等非 CRUD 操作；悬停可查看授予比例。</p>
+          </div>
+          <span class="panel-note">15 个模块 · 69 项权限</span>
+        </div>
+
+        <div class="matrix-wrap">
+          <table class="matrix matrix-wide">
+            <thead>
+              <tr>
+                <th rowspan="2">模块</th>
+                <th colspan="5" class="role-head group-start">超级管理员</th>
+                <th colspan="5" class="role-head group-start">平台运营</th>
+                <th colspan="5" class="role-head group-start">只读审计</th>
+              </tr>
+              <tr>
+                <th class="group-start">查看</th><th>创建</th><th>编辑</th><th>删除</th><th>专项</th>
+                <th class="group-start">查看</th><th>创建</th><th>编辑</th><th>删除</th><th>专项</th>
+                <th class="group-start">查看</th><th>创建</th><th>编辑</th><th>删除</th><th>专项</th>
+              </tr>
+            </thead>
+            <tbody data-full-matrix-body></tbody>
+          </table>
+        </div>
+
+        <div class="matrix-legend">
+          <span class="legend-item"><span class="dot on sup"></span>内置授权（超级管理员）</span>
+          <span class="legend-item"><span class="dot on"></span>角色授予</span>
+          <span class="legend-item"><span class="dot"></span>未授予</span>
+          <span class="legend-item"><span class="dot count">3/7</span>专项已授予 / 总数</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">读法与边界</h2>
+        </div>
+        <div class="panel-body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px">
+          <div>
+            <div class="cell-name" style="margin-bottom:4px">取并集，不取交集</div>
+            <p class="cell-sub" style="margin:0">一个用户拥有多个角色时，权限为各角色权限之和，任一角色授予即可访问。</p>
+          </div>
+          <div>
+            <div class="cell-name" style="margin-bottom:4px">只读不是「禁用」</div>
+            <p class="cell-sub" style="margin:0">没有写权限时，前端不渲染按钮，后端同时拒绝请求。两者缺一不可。</p>
+          </div>
+          <div>
+            <div class="cell-name" style="margin-bottom:4px">超级管理员是例外</div>
+            <p class="cell-sub" style="margin:0">内置账号不依赖角色授权，避免角色被误删后系统失去管理入口。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
