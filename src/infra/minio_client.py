@@ -3,6 +3,7 @@ import io
 from minio import  Minio
 
 from src.core.config import get_settings
+from src.infra.mock_minio import MockMinioClient
 from loguru import logger
 
 
@@ -10,15 +11,20 @@ from loguru import logger
 settings = get_settings()
 
 # 创建 MinIO 客户端
-_minio_client = Minio(
-    settings.MINIO_ENDPOINT,
-    access_key=settings.MINIO_ACCESS_KEY,
-    secret_key=settings.MINIO_SECRET_KEY,
-    secure=settings.MINIO_SECURE,
-)
+# 本地免 Docker 开发时可切换为内存模拟实现（USE_MOCK_MINIO=true）
+if settings.USE_MOCK_MINIO:
+    logger.info("[minio] 使用内存模拟实现（USE_MOCK_MINIO=true），重启后文件丢失")
+    _minio_client = MockMinioClient()
+else:
+    _minio_client = Minio(
+        settings.MINIO_ENDPOINT,
+        access_key=settings.MINIO_ACCESS_KEY,
+        secret_key=settings.MINIO_SECRET_KEY,
+        secure=settings.MINIO_SECURE,
+    )
 
 # 暴露 MinIO 客户端实例
-def get_minio_client() -> Minio:
+def get_minio_client():
     """
     FastAPI Depends 注入用。
     直接返回模块级别的 MinIO 客户端实例，不需要每次创建新实例。
@@ -77,8 +83,11 @@ def download_file(object_name: str) -> bytes:
         logger.error(f"下载文件 {object_name} 失败：{e}")
         raise e
     finally:
-        resp.close() # 关闭响应流
-        resp.release_conn() # 释放连接
+        # 真实 MinIO 的响应需要关闭并归还连接；内存模拟返回的是 BytesIO，没有这两个方法
+        if hasattr(resp, "close"):
+            resp.close()
+        if hasattr(resp, "release_conn"):
+            resp.release_conn()
 
 
 def delete_object(object_name: str) -> None:

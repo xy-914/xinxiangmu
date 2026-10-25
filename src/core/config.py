@@ -25,6 +25,8 @@ class Settings(BaseSettings):
     MINIO_SECRET_KEY: str = "minioadmin"
     MINIO_BUCKET: str = "knowledge-docs"
     MINIO_SECURE: bool = False
+    # 本地免 Docker 开发：为 True 时使用内存模拟的 MinIO 客户端（进程内存储，重启即丢失）
+    USE_MOCK_MINIO: bool = False
 
 
     LOG_LEVEL: str = "DEBUG"
@@ -32,11 +34,8 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL(self) -> str:
-        return (
-            f"mysql+asyncmy://{self.DB_USER}:{self.DB_PASSWORD}"
-            f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
-            f"?charset=utf8mb4"
-        )
+        # 本地免 Docker 开发：直接使用 SQLite 文件库，无需安装 MySQL
+        return "sqlite+aiosqlite:///./chenguang.db"
 
     # 指定环境变量文件
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
