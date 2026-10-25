@@ -138,3 +138,15 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# ===== 项目本地运行产物（不要提交）=====
+# SQLite 数据库及其自动备份
+chenguang.db
+chenguang.db.bak_*
+*.db-wal
+*.db-shm
+# 后端日志
+logs/
+*.log
+# 本地工具缓存
+.workbuddy/
